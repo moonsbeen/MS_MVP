@@ -6,7 +6,7 @@
 user10-webapp-01-hpfve6fcfdhebgge.eastus2-01.azurewebsites.net
 
 ## 개요 및 목적
-- SQL 쿼리를 입력 받아 SQL 문맥과 구조를 이해하여 다른 문법의 SQL로 변환해 주는 AI Agent  -
+- **SQL 쿼리를 입력 받아 SQL 문맥과 구조를 이해하여 다른 문법의 SQL로 변환해 주는 AI Agent**
   - 이기종 DB간 호환성 확보
   -	AI 기반 쿼리 분석 및 최적화
   -	개발자 생산성 향상
