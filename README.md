@@ -1,4 +1,4 @@
-# SQL 변환기 및 CSV 파일 업로드 애플리케이션  
+# SQL 변환 어플리케이션
   
 이 프로젝트는 SQL 쿼리를 특정 DBMS에서 다른 DBMS로 변환하고, CSV 파일을 Azure Blob Storage에 업로드하는 Streamlit 애플리케이션입니다.  
   
