@@ -1,0 +1,43 @@
+** 단순 문자열
+
+** query1 
+- mssql -> oracle, mysql
+SELECT DATEDIFF(DAY,   '2021-06-12', '2021-07-13') AS [일차이]
+     , DATEDIFF(MONTH, '2021-06-12', '2021-07-13') AS [개월차이] 
+     , DATEDIFF(YEAR,  '2021-06-12', '2021-07-13') AS [년차이]
+
+** query2
+- postgresql -> mysql, oracle
+with base_data as (
+          select sub.gisu, sub.str_1, fix.ty_cost, fix.da_acquire
+          from fta_carbu_v2_mat_1_1_sub as sub 
+          join UNNEST(STRING_TO_ARRAY(%(code)s, ',')) as codes on sub.gisu = %(gisu)s and sub.str_1 = codes
+          join fta_fixast as fix on sub.gisu = fix.gisu and fix.cd_fixast = sub.str_7 and fix.mn_1_1_1 = 1
+    ), update_main as (
+        update fta_carbu_v2_mat_1_1 main
+        set str_8 = base.da_acquire
+        from base_data as base 
+        where base.str_1 = main.str_1
+        AND MAIN.GISU = %(gisu)s
+        returning main.str_1, main.str_8
+    ), update_sub as (
+        update fta_carbu_v2_mat_1_1_sub sub
+        set mn_3 = base.ty_cost
+        from base_data as base 
+        where base.gisu = sub.gisu and base.str_1 = sub.str_1
+        returning sub.str_1, sub.mn_3
+    )
+    select main.str_1, main.str_8, sub.mn_3::varchar
+    from update_main as main
+    left outer join update_sub as sub on main.str_1 = sub.str_1;
+
+** CSV
+select *
+from inventorylot_v4
+
+select quantity
+from inventorylot_v4
+inner join product_v6
+on inventorylot_v4.inventoryType =0product_v6.productType
+
+
