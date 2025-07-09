@@ -35,7 +35,7 @@ with base_data as (
 select *
 from inventorylot_v4
 
-mysql -> nosql -> postgresql
+mysql -> mongodb -> mssql
 SELECT quantity
 FROM inventorylot_v4
 INNER JOIN product_v6
