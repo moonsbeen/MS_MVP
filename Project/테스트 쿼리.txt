@@ -1,0 +1,5 @@
+* CSV 기반 서치
+select quantity
+from inventorylot_v4
+inner join product_v6
+on inventorylot_v4.inventoryType =0product_v6.productType

@@ -1,0 +1,16 @@
+-m venv .venv
+Set-ExecutionPolicy Unrestricted
+.\.venv\Scripts\Activate.ps1 
+pip install streamlit
+python -m streamlit run app.py
+
+1. 리소스 생성
+2. 스토리지, 컨테이너 생성
+3. webapp 생성
+4. open ai 생성
+
+
+github
+mmmsu@naver.com	
+cau2181!
+
