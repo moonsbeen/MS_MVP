@@ -85,7 +85,7 @@ def detect_source_db(query: str) -> str:
       sql
       {query}
       ) 
-      반드시 다음 중 한 단어로만 반환하세요: [Oracle, Mysql, Mssql, Postgresql, Teradata, Nosql]
+      반드시 다음 중 한 단어로만 반환하세요: [Oracle, Mysql, Mssql, Postgresql, Teradata, Mongodb]
       특정 DBMS에 고유한 문법이나 기능을 사용하지 않고, 일반적인 SQL 문법을 따르는 경우 "Mysql"을 반환하세요.
       논리적 오류 여부는 무시하세요.
       단순 문자열인 경우 "Unknown"을 반환하고 이유를 설명해 주세요.
@@ -94,7 +94,7 @@ def detect_source_db(query: str) -> str:
 
   print(llm(messages))
   result = llm(messages).content.strip().split()[0].capitalize()
-  if result not in ["Oracle", "Mysql", "Mssql", "Postgresql", "Nosql", "Teradata"]:
+  if result not in ["Oracle", "Mysql", "Mssql", "Postgresql", "Mongodb", "Teradata"]:
     return "Unknown"
   return result
 
@@ -171,7 +171,7 @@ if st.button("🔁 초기화"):
   st.session_state.csv_uploaded = False  
   st.session_state.upload_file = None 
   
-dbms_options = ["Oracle", "Mysql", "Postgresql", "Mssql", "Teradata", "Nosql"]    
+dbms_options = ["Oracle", "Mysql", "Postgresql", "Mssql", "Teradata", "Mongodb"]    
 target_db = st.selectbox("✍ 변환할 DBMS 선택", dbms_options, index=dbms_options.index(st.session_state.get("target_db", dbms_options[0])))  
   
 # SQL 쿼리 입력 
@@ -187,7 +187,6 @@ if st.button("SQL 변환하기"):
     if detected_source_db == "Unknown":  
       st.error("원본 DBMS를 감지할 수 없습니다.")  
     else:  
-      #st.success(f"감지된 DBMS: `{detected_source_db}`   변환할 DBMS: `{target_db}`")  
       # DBMS가 동일한지 확인  
       if detected_source_db == target_db:  
         st.warning("🚫원본과 대상 DBMS가 동일합니다.🚫")  
@@ -196,20 +195,19 @@ if st.button("SQL 변환하기"):
           json_output = convert_sql(st.session_state.query, detected_source_db, target_db)
           parsed = json.loads(json_output)
           st.session_state.converted_sql = parsed["converted_sql"]
-          #st.session_state.converted_sql = convert_sql(st.session_state.query, st.session_state.source_db, target_db)  # SQL 변환 함수 호출  
           st.success("변환 완료!")  
 
-        # 변환된 SQL 표시  
-        if st.session_state.converted_sql:  
-          st.markdown("---")
-          st.markdown("### 📃 변환 정보")
-          st.markdown(f"- **원본 DBMS**: `{parsed['source_dbms']}`")
-          st.markdown(f"- **대상 DBMS**: `{parsed['target_dbms']}`")
-          st.markdown(f"- **변환 요약**: `{parsed['conversion_notes']}`")
+    # 변환된 SQL 표시  
+    if st.session_state.converted_sql:  
+      st.markdown("---")
+      st.markdown("### 📃 변환 정보")
+      st.markdown(f"- **원본 DBMS**: `{parsed['source_dbms']}`")
+      st.markdown(f"- **대상 DBMS**: `{parsed['target_dbms']}`")
+      st.markdown(f"- **변환 요약**: `{parsed['conversion_notes']}`")
 
-          st.markdown("---") 
-          st.markdown("### 📃 변환된 SQL")
-          st.code(parsed["converted_sql"], language="sql") 
+      st.markdown("---") 
+      st.markdown("### 📃 변환된 SQL")
+      st.code(parsed["converted_sql"], language="sql") 
 
 st.markdown("---") 
 st.header("📁 CSV 파일 업로드")
@@ -229,6 +227,7 @@ else:
   else:  
     st.info("먼저 CSV 파일을 선택하세요.")
 
+# 변환된 SQL 실행
 if st.session_state.converted_sql:
   st.markdown("---")
   st.header("📊 SQL 테스트 하기")
@@ -238,6 +237,7 @@ if st.session_state.converted_sql:
         # 쿼리 실행  
         result_df = load_and_join_csv_from_blob(azure_blob, azure_container, st.session_state.converted_sql)  
         # 결과 출력  
+        st.code(st.session_state.converted_sql, language="sql") 
         st.dataframe(result_df)  # Streamlit의 데이터프레임 표시  
       except sqlite3.Error as e:  
         st.error(f"SQL Error: {e}")  # SQL 오류 메시지 출력  
