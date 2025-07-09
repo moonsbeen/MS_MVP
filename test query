@@ -35,9 +35,9 @@ with base_data as (
 select *
 from inventorylot_v4
 
-select quantity
-from inventorylot_v4
-inner join product_v6
-on inventorylot_v4.inventoryType =0product_v6.productType
-
+mysql -> nosql -> postgresql
+SELECT quantity
+FROM inventorylot_v4
+INNER JOIN product_v6
+ON inventorylot_v4.inventoryType = product_v6.productType
 
