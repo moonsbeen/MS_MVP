@@ -13,7 +13,8 @@
 ## 📊 아키텍처 다이어그램  
 - **Azure 서비스**:
   - **Azure OpenAI**: 입력받은 SQL 변환 및 DBMS 판단
-  - **Azure Blob Storage**: CSV 파일 저장 및 관리  
+  - **Azure Blob Storage**: CSV 파일 저장 및 관리
+  - **Azure App service**: 배포
 - **프론트엔드**:  
   - **Streamlit**: 사용자 인터페이스 제공  
 - **데이터 흐름**:  
