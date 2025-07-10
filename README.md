@@ -1,6 +1,6 @@
 # 🔧 SQL 변환 어플리케이션  
   
-이 프로젝트는 SQL 쿼리를 특정 DBMS에서 다른 DBMS로 변환하고, CSV 파일을 Azure Blob Storage에 업로드하는 Streamlit 애플리케이션입니다.  
+이 프로젝트는 SQL 쿼리를 특정 DBMS에서 다른 DBMS로 변환하고, CSV 파일을 Azure Blob Storage에 업로드하여 테스트해볼 수 있는 Streamlit 애플리케이션입니다.  
   
 ## 🌐 실행 도메인  
 [http://user10-webapp-01-hpfve6fcfdhebgge.eastus2-01.azurewebsites.net](http://user10-webapp-01-hpfve6fcfdhebgge.eastus2-01.azurewebsites.net)  
