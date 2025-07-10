@@ -11,17 +11,17 @@
 - 개발자 생산성 향상  
   
 ## 📊 아키텍처 다이어그램  
-- **Azure 서비스**:  
+- **Azure 서비스**:
+  - **Azure OpenAI**: 입력받은 SQL 변환 및 DBMS 판단
   - **Azure Blob Storage**: CSV 파일 저장 및 관리  
-  - **Azure OpenAI**: SQL 변환 및 DBMS 감지  
 - **프론트엔드**:  
   - **Streamlit**: 사용자 인터페이스 제공  
 - **데이터 흐름**:  
-  1. Streamlit 기반 화면 → 사용자가 SQL 쿼리 입력  
-  2. DBMS 감지 요청 → Azure OpenAI 호출  
-  3. SQL 변환 요청 → Azure OpenAI 호출  
+  1. Streamlit 기반 화면 → 사용자가 SQL 변환할 쿼리 입력  
+  2. Azure OpenAI 호출 → DBMS 판단 요청
+  3. Azure OpenAI 호출 → SQL 변환 요청  
   4. CSV 파일 업로드 → Azure Blob Storage  
-  5. SQL 쿼리 실행 → SQLite 데이터베이스에서 처리  
+  5. SQL 쿼리 실행 → SQLite 데이터베이스에서 Azure Blob Storage에 업로드된 데이터 기반 처리  
   
 ## 🔑 핵심 기술 포인트  
 - **커스텀 프롬프트 엔지니어링**:  
